@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import Items from "./items/Items";
 import Loanding from "../loanding/Loanding";
 import Categories from "./Categories/Categories";
-export default function Start() {
+export default function Start({favorite, setFavorite}) {
   const [state, setState] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
-  const [basket, setBasket] = useState([]);
   const [massage, setMassage] = useState(false);
   const [categoryMassage, setCategoryMassage] = useState(false);
 
@@ -47,14 +46,16 @@ export default function Start() {
     if (value === "all") setCategoryMassage(!categoryMassage);
     setCategory(data);
   };
+  
 
   const onAddBasket = (basketItem, id) => {
-    const find = basket.some((el) => (el.id === id ? true : false));
+    
+    const find = favorite.some((el) => (el.id === id ? true : false));
     if (find) {
-      setBasket((current) =>
+      setFavorite((current) =>
         current.filter((filBasket) => filBasket.id !== id)
       );
-    } else setBasket((current) => [...current, basketItem]);
+    } else setFavorite((current) => [...current, basketItem]);
   };
   return (
     <>
@@ -69,7 +70,7 @@ export default function Start() {
             </div>
             <div className="flex flex-wrap justify-center bg-[#E5E4E9]">
               {(categoryMassage ? category : state).map((item) => (
-                <Items item={item} basket={basket} onAddBasket={onAddBasket} />
+                <Items item={item} favorite={favorite} onAddBasket={onAddBasket} />
               ))}
             </div>
           </div>

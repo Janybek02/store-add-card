@@ -1,8 +1,8 @@
 import { FaBookmark } from "react-icons/fa";
 import { BiSolidCartAdd } from "react-icons/bi";
-export default function Items({ item, onAddBasket, basket }) {
+export default function Items({ item, onAddBasket, favorite }) {
   // console.log(item);
-  const isLiket = basket.some((basketEl) => basketEl.id === item.id)
+  const isLiket = favorite.some((basketEl) => basketEl.id === item.id)
   return (
     <>
       <div className=" m-3 bg-[#746f6f] rounded-3xl ">
