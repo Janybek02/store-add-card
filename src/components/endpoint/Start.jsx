@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import Items from "./items/Items";
 import Loanding from "../loanding/Loanding";
 import Categories from "./Categories/Categories";
-export default function Start({favorite, setFavorite}) {
+
+
+
+export default function Start({favorite, setFavorite, basket, setBasket}) {
   const [state, setState] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
@@ -46,20 +49,31 @@ export default function Start({favorite, setFavorite}) {
     if (value === "all") setCategoryMassage(!categoryMassage);
     setCategory(data);
   };
-  
-
-  const onAddBasket = (basketItem, id) => {
+  const onAddFavorite = (basketItem, id) => {
     
     const find = favorite.some((el) => (el.id === id ? true : false));
     if (find) {
       setFavorite((current) =>
         current.filter((filBasket) => filBasket.id !== id)
       );
-    } else setFavorite((current) => [...current, basketItem]);
+    } else setFavorite((current) => [...current, basketItem, ]);
+  };
+
+  const onAddBasket = (basketItem, id) => {
+
+      basketItem.quan = 1
+      console.log(basketItem);
+    const find = basket.some((el) => (el.id === id ? true : false));
+    if (find) {
+      setBasket((current) =>
+        current.filter((filBasket) => filBasket.id !== id)
+      );
+    } else setBasket((current) => [...current, basketItem]);
+    
   };
   return (
     <>
-      <div className="  bg-[#E5E4E9]">
+      <div className= "  bg-[#E5E4E9]">
         {massage ? (
           <div className="  bg-[#E5E4E9]">
             <div className=" w-5">
@@ -70,7 +84,7 @@ export default function Start({favorite, setFavorite}) {
             </div>
             <div className="flex flex-wrap justify-center bg-[#E5E4E9]">
               {(categoryMassage ? category : state).map((item) => (
-                <Items item={item} favorite={favorite} onAddBasket={onAddBasket} />
+                <Items item={item} favorite={favorite} onAddBasket={onAddBasket} basket={basket} onAddFavorite={onAddFavorite}/>
               ))}
             </div>
           </div>

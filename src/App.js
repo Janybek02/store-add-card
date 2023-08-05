@@ -9,24 +9,38 @@ function App() {
   const [favorite, setFavorite] = useState(
     JSON.parse(localStorage.getItem("favoriteItem")) || []
   );
-  const [onFavorite, setOnFavorite] = useState(false);
-
+  const [basket, setBasket] = useState(
+    JSON.parse(localStorage.getItem("basketItem")) || []
+  );
+  const [favoriteToggle, setFavoriteToggle] = useState(false);
+  const [basketToggle, setBasketToggle] = useState(false);
   useEffect(() => {
+    localStorage.setItem("basketItem", JSON.stringify(basket));
     localStorage.setItem("favoriteItem", JSON.stringify(favorite));
-  }, [favorite]);
+  }, [favorite, basket]);
+  const onChangeBasket = () => {
+    setFavoriteToggle(false);
+    setBasketToggle(!basketToggle);
+  };
   const onChangeFavorite = () => {
-    setOnFavorite(!onFavorite);
+    setFavoriteToggle(!favoriteToggle);
+    setBasketToggle(false);
   };
 
   return (
     <div className="App">
-      <Header onChangeFavorite={onChangeFavorite} />
-      <Start favorite={favorite} setFavorite={setFavorite} />
-      {onFavorite
-        ? 
-            <Favorite favorite={favorite} setOnFavorite={setOnFavorite}/>
-      
-        : null}
+      <Header
+        onChangeFavorite={onChangeFavorite}
+        onChangeBasket={onChangeBasket}
+      />
+      <Start
+        favorite={favorite}
+        setFavorite={setFavorite}
+        basket={basket}
+        setBasket={setBasket}
+      />
+      {favoriteToggle ? <Favorite favorite={favorite} /> : null}
+      {basketToggle ? <Basket basket={basket} setBasket={setBasket}/> : null}
     </div>
   );
 }

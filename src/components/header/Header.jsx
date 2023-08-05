@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import {BsFillBookmarkCheckFill} from "react-icons/bs"
-export default function Header({onChangeFavorite}) {
+export default function Header({onChangeFavorite, onChangeBasket}) {
   return (
     <>
       <div className="header w-full h-12 bg-[#746f6f] flex items-center justify-center">
@@ -13,7 +13,9 @@ export default function Header({onChangeFavorite}) {
             </button>
           </div>
           <div className="header--div">
-            <button className=" text-2xl text-white text-center w-32 h-8 bg-black rounded-md ">
+            <button
+              onClick={onChangeBasket}
+            className=" text-2xl text-white text-center w-32 h-8 bg-black rounded-md ">
               Basket
             </button>
           </div>

@@ -11,9 +11,9 @@ export const Favorite = ({ favorite, setOnFavorite }) => {
                 <div className=" w-[250px] rounded-xl bg-white h-[150px] flex items-center justify-center">
                   <img src={favoriteItem.image} className="w-[34%]" />
                 </div>
-                <div className=" mb-3 mx-[10px] text-xl text-center text-white">
-                  <p>{favoriteItem.title.slice(0, 13)}</p>
-                  <p className=" text-[9px] leading-normal">
+                <div className=" mb-3  font-semibold  mx-[10px] text-xl text-center text-white">
+                  <p className=" font-semibold ">{favoriteItem.title.slice(0, 13)}</p>
+                  <p className="  font-semibold  text-[9px] leading-normal">
                     {favoriteItem.description}
                   </p>
                 </div>
