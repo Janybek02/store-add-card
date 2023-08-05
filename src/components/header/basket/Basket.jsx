@@ -20,7 +20,7 @@ export const Basket = ({ basket, setBasket }) => {
         <h1 className=" font-semibold text-4xl">Shoping card</h1>
       {basket.map((basketItem) => {
         return (
-          <div class=" w-[600px] flex justify-between items-center  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div class=" w-[600px] flex justify-between items-center  bg-white border border-gray-200 rounded-lg  ">
             <a href="#">
               <img
                 class="p-8  rounded-t-lg "
