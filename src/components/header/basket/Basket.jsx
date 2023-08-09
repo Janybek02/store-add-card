@@ -1,36 +1,53 @@
 import { useState } from "react";
+import  BasketEmty  from "./basketEmty/BasketEmty";
+export const Basket = ({ basket, setBasket, basketToggle }) => {
 
-export const Basket = ({ basket, setBasket }) => {
  
- console.log(basket);
-    
-    
-    const quantityPlus = (num, id) => {
-       const find =  basket.some((item) => item.id === id )
-        
-        console.log(basket);
-    }
-    const quantityMinus = (num) => {
-       
-    }
-    
+  const quantityPlus = (id) => {
+    const newPlusedBasketItems = basket.map((el) => {
+      if (el.id === id) {
+        const quan = el.quan + 1;
+        const price = quan * el.price;
+        console.log(quan);
+        return { ...el, quan, price };
+      } else return el;
+    });
+    console.log(newPlusedBasketItems);
+    setBasket(newPlusedBasketItems);
+  };
+  const quantityMinus = (id) => {
+    const newMinusedBasketItems = basket.map((item) => {
+      if (id === item.id) {
+        if (item.quan > 1) {
+          let quan = item.quan - 1;
+          const price =  item.price / item.quan;
+          console.log(quan);
+          return { ...item, quan, price };
+        } else return item;
+      } else return item;
+    });
+
+    setBasket(newMinusedBasketItems);
+  };
 
   return (
-    <div className=" w-full absolute top-12 bg-white h-[215%]">
-        <h1 className=" font-semibold text-4xl">Shoping card</h1>
-      {basket.map((basketItem) => {
+    <div className=" w-full absolute top-12 flex justify-center items-centerer  bg-white pt-3 ">
+      <div className="w-[90%] border-solid border-2 border-inherit ">
+         <h1 className=" font-semibold text-center text-4xl">Shoping card</h1>
+      {basket.length ? basket.map((basketItem) => {
         return (
-          <div class=" w-[600px] flex justify-between items-center  bg-white border border-gray-200 rounded-lg  ">
-            <a href="#">
+          <>
+           <div class=" w-[600px] p-6 flex justify-between items-center m-3  bg-[#f2ececd7] border border-gray-200 rounded-lg  ">
+            <a href="" className="p-6 rounded-2xl bg-white ">
               <img
-                class="p-8  rounded-t-lg "
+                class="  rounded-t-lg "
                 src={basketItem.image}
                 alt="product image"
               />
             </a>
             <div class="px-5  pb-5">
               <div className="w-[300px]" href="#">
-                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                <h5 class="text-xl font-semibold tracking-tight dark:text-white">
                   {basketItem.description.slice(0, 100)}
                 </h5>
               </div>
@@ -84,46 +101,78 @@ export const Basket = ({ basket, setBasket }) => {
                   {basketItem.rating.rate}
                 </span>
               </div>
-              
               <div class="flex items-center space-x-3">
-                        <button
-                            onClick={() => quantityMinus(1, basketItem.id )}
-                        class="inline-flex items-center justify-center p-1 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                            <span class="sr-only">Quantity button</span>
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                            </svg>
-                        </button>
-                        <div>
-                            <div
-                                
-                             id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >{basketItem.quan}</div>
-                        </div>
-                        <button
-                            onClick={() => quantityPlus(1, basketItem.id)}
-                        class="inline-flex items-center justify-center h-6 w-6 p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                            <span class="sr-only">Quantity button</span>
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                            </svg>
-                        </button>
-                    </div>
-            
+                <button
+                  onClick={() => quantityMinus(basketItem.id)}
+                  class="inline-flex items-center justify-center p-1 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  type="button"
+                >
+                  <span class="sr-only">Quantity button</span>
+                  <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 2"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M1 1h16"
+                    />
+                  </svg>
+                </button>
+                <div>
+                  <div
+                    id="first_product"
+                    class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    {basketItem.quan}
+                  </div>
+                </div>
+                <button
+                  onClick={() => quantityPlus(basketItem.id)}
+                  class="inline-flex items-center justify-center h-6 w-6 p-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                  type="button"
+                >
+                  <span class="sr-only">Quantity button</span>
+                  <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 1v16M1 9h16"
+                    />
+                  </svg>
+                </button>
+              </div>
               <div class="flex items-center justify-between">
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">
                   ${basketItem.price}
                 </span>
-                <div
-                  
-                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+                <div class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Add to cart
                 </div>
               </div>
             </div>
           </div>
+          </>
+         
+          
         );
-      })}
+      }) : <BasketEmty/>}
+
+      </div>
+     
     </div>
   );
 };

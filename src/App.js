@@ -18,7 +18,11 @@ function App() {
     localStorage.setItem("basketItem", JSON.stringify(basket));
     localStorage.setItem("favoriteItem", JSON.stringify(favorite));
   }, [favorite, basket]);
+
+  
+  
   const onChangeBasket = () => {
+    // basketScroll()
     setFavoriteToggle(false);
     setBasketToggle(!basketToggle);
   };
@@ -26,6 +30,13 @@ function App() {
     setFavoriteToggle(!favoriteToggle);
     setBasketToggle(false);
   };
+  const startProps = <Start
+  favorite={favorite}
+  setFavorite={setFavorite}
+  basket={basket}
+  setBasket={setBasket}
+/>
+   
 
   return (
     <div className="App">
@@ -33,14 +44,10 @@ function App() {
         onChangeFavorite={onChangeFavorite}
         onChangeBasket={onChangeBasket}
       />
-      <Start
-        favorite={favorite}
-        setFavorite={setFavorite}
-        basket={basket}
-        setBasket={setBasket}
-      />
-      {favoriteToggle ? <Favorite favorite={favorite} /> : null}
-      {basketToggle ? <Basket basket={basket} setBasket={setBasket}/> : null}
+      
+      {favoriteToggle || basketToggle ? (favoriteToggle ? <Favorite favorite={favorite} /> : null || basketToggle ?  <Basket basket={basket} setBasket={setBasket} basketToggle={basketToggle}/> : null) :
+       startProps}
+      
     </div>
   );
 }

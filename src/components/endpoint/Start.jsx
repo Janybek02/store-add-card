@@ -36,7 +36,7 @@ export default function Start({favorite, setFavorite, basket, setBasket}) {
     };
     setTimeout(() => {
       fetchData();
-    }, 2000);
+    }, 1000);
     fetchCategories();
   }, []);
 
@@ -47,7 +47,9 @@ export default function Start({favorite, setFavorite, basket, setBasket}) {
     const data = await categoryUrl.json();
 
     if (value === "all") setCategoryMassage(!categoryMassage);
+    // else { setCategoryMassage(!categoryMassage)}
     setCategory(data);
+    console.log();
   };
   const onAddFavorite = (basketItem, id) => {
     
@@ -60,7 +62,7 @@ export default function Start({favorite, setFavorite, basket, setBasket}) {
   };
 
   const onAddBasket = (basketItem, id) => {
-
+      
       basketItem.quan = 1
       console.log(basketItem);
     const find = basket.some((el) => (el.id === id ? true : false));
