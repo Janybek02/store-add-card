@@ -19,8 +19,27 @@ function App() {
     localStorage.setItem("favoriteItem", JSON.stringify(favorite));
   }, [favorite, basket]);
 
-  
-  
+  const onAddFavorite = (basketItem, id) => {
+    const find = favorite.some((el) => (el.id === id ? true : false));
+    if (find) {
+      setFavorite((current) =>
+        current.filter((filBasket) => filBasket.id !== id)
+      );
+    } else setFavorite((current) => [...current, basketItem]);
+    // favBasFind(id,)
+  };
+
+  const onAddBasket = (basketItem, id) => {
+    basketItem.quan = 1;
+    // console.log(basketItem);
+    const find = basket.some((el) => (el.id === id ? true : false));
+    if (find) {
+      setBasket((current) =>
+        current.filter((filBasket) => filBasket.id !== id)
+      );
+    } else setBasket((current) => [...current, basketItem]);
+  };
+
   const onChangeBasket = () => {
     // basketScroll()
     setFavoriteToggle(false);
@@ -30,24 +49,39 @@ function App() {
     setFavoriteToggle(!favoriteToggle);
     setBasketToggle(false);
   };
-  const startProps = <Start
-  favorite={favorite}
-  setFavorite={setFavorite}
-  basket={basket}
-  setBasket={setBasket}
-/>
-   
+  const startProps = (
+    <Start
+      favorite={favorite}
+      setFavorite={setFavorite}
+      basket={basket}
+      setBasket={setBasket}
+      onAddFavorite={onAddFavorite}
+      onAddBasket={onAddBasket}
+    />
+  );
 
   return (
     <div className="App">
       <Header
+        basket={basket}
+        favorite={favorite}
         onChangeFavorite={onChangeFavorite}
         onChangeBasket={onChangeBasket}
       />
-      
-      {favoriteToggle || basketToggle ? (favoriteToggle ? <Favorite favorite={favorite} /> : null || basketToggle ?  <Basket basket={basket} setBasket={setBasket} basketToggle={basketToggle}/> : null) :
-       startProps}
-      
+
+      {favoriteToggle ? (
+        <Favorite
+          favorite={favorite}
+          onAddBasket={onAddBasket}
+          basket={basket}
+          onAddFavorite={onAddFavorite}
+        />
+      ) : null}
+      {basketToggle ? (
+        <Basket basket={basket} setBasket={setBasket}  onAddBasket={onAddBasket} />
+      ) : (
+        startProps
+      )}
     </div>
   );
 }
